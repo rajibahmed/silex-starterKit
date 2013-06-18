@@ -1,0 +1,27 @@
+{
+	"name": "rajibahmed/silex-starterKit",
+	"authors":[
+		{"name": "Rajib Ahmed", "email": "ahmed.rajib@hotmail.com"}
+	],
+	"require-dev":{
+		"phpunit/phpunit"		: "3.7.*"
+	},
+	"require": {
+		"php"					:">5.4",
+		"silex/silex"	: "1.*",
+		"twig/twig"				:">=1.8,<2.0-dev",
+		"symfony/twig-bridge"	:"~2.3",
+		"symfony/yaml"			: "*",
+		"symfony/console"		: "*",
+		"symfony/finder"		: "*",
+		"symfony/process"		: "*",
+		"symfony/translation"	: "*",
+		"symfony/validator"		: "*",
+		"monolog/monolog"		:"*",
+		"symfony/monolog-bridge":"*"
+	},
+	"minimum-stability": "dev",
+	"autoload":{
+		"psr-0":{"":"app/"}
+	}
+}
