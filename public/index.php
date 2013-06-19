@@ -2,20 +2,16 @@
 
 define('ROOT',dirname(__DIR__));
 define('DS',DIRECTORY_SEPARATOR);
-define('APP_PATH', ROOT.'app');
-
-echo APP_PATH;
+define('APP_PATH', ROOT.DS.'app');
+define('PUBLIC_PATH', ROOT.DS.'public');
 
 require_once(ROOT.DS.'vendor/autoload.php');
 
-$app = require(APP_PATH.DS.'app.php');
-$app['debug']= true;
-require(ROOT.DS.'config/prod.php');
-require(ROOT.DS.'config/assetic.php');
-require(APP_PATH.DS.'routes.php');
 
-if($app['debug']){
-	$app->run();
-}else{
-	$app['http_cache']->run();
-}
+$app = require_once(APP_PATH.DS.'app.php');
+
+$app->get('/', function() use ($app){
+	$app->log('test');
+	return 'test';
+});
+$app->run();
