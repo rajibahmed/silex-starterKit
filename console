@@ -6,5 +6,11 @@ use Symfony\Component\Console\Application;
 
 $console = new Application('Silex-StarterKit','1.0');
 
+$commands[]= new Console\AssetBuilder();
+
+foreach ($commands as $command)
+{
+    $console->add($command);
+}
 
 $console->run();
