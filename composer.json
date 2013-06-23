@@ -19,7 +19,8 @@
 		"symfony/validator"		: "*",
 		"monolog/monolog"		:"*",
 		"symfony/monolog-bridge":"*",
-        "rajibahmed/rake-db-migrator":"*"
+        "rajibahmed/rake-db-migrator":"*",
+		"mheap/Silex-Assetic": "*"
 	},
 	"minimum-stability": "dev",
 	"autoload":{
