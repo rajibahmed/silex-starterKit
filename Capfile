@@ -45,11 +45,4 @@ namespace :composer do
 
 end
 
-namespace :assetic do
-  desc "Dump assets"
-  task :dump do
-    run "cd #{current_release} && ./config/console assetic:dump"
-  end
-end
-
 after "deploy:finalize_update", "composer:copy" 
