@@ -7,16 +7,6 @@ load 'config/deploy'       # remove this line to skip loading any of the default
 #require 'capistrano/ext/multistage'
 
 
-
-namespace :backup do
-
-  desc "will create a SQL file to a secure place"
-  task :db do
-    puts "backup db "
-  end
-
-end
-
 namespace :composer do
 
   desc "Install application dependencies"
@@ -26,7 +16,7 @@ namespace :composer do
 
   desc "Update application dependencies"
   task :update do
-    set(:update_by , Capistrano::CLI.ui.ask(" ie. ztorm/zapi: "))
+    set(:update_by , Capistrano::CLI.ui.ask(" ie. silex: "))
     update_by = "-v" if update_by.nil?
     run "cd #{current_path} && composer.phar update #{update_by}"
     run "cd #{current_path} && composer.phar dump-autoload -o"
@@ -34,27 +24,16 @@ namespace :composer do
 
   desc "Copy from last revision"
   task :copy do
-    #run " cd #{current_release} && chmod -R 775 . "
-
     unless previous_release.nil?
-      run "cp -R #{previous_release}/vendor/* #{current_release}/vendor "
+      run "cp -R #{previous_release}/vendor #{current_release}/ "
       run "cp #{previous_release}/config/prod.php    #{current_release}/config "
-      run "cp #{previous_release}/config/console    #{current_release}/config "
-      run "rm #{current_release}/public/index_dev.php #{current_release}/composer.json "
-      run "mkdir #{current_release}/cache && chmod -R 777 #{current_release}/cache "
-      run "mkdir #{current_release}/public/assets && chmod -R 755 #{current_release}/public/assets"
-      run "cp #{previous_release}/public/.htaccess #{current_release}/public/ "
+      run "mkdir #{current_release}/cache && chmod -R 775 #{current_release}/cache "
       run "cp #{current_release}/REVISION #{current_release}/public/hash.txt"
+	else
+		composer.install # install libs on first deployment
     end
   end
 
-
-  desc "Admin install php packages"
-  task :notify do
-    puts "================================================"
-    puts "= Run composer:install to load php packages    ="
-    puts "================================================"
-  end
 
   desc "Remove installed libraries"
   task :cleanup do
@@ -73,5 +52,4 @@ namespace :assetic do
   end
 end
 
-after 'deploy:setup', "composer:notify"
-after "deploy:finalize_update", "composer:copy" , "assetic:dump"
+after "deploy:finalize_update", "composer:copy" 
